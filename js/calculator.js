@@ -14,10 +14,6 @@ function divide(a, b) {
   return a / b;
 }
 
-function changeSign(a) {
-  return -a;
-}
-
 function percent(a, b) {
   return a * (b / 100);
 }
@@ -32,45 +28,77 @@ function operate(firstOperator, secondOperator, operator) {
       return multiply(firstOperator, secondOperator);
     case '/':
       return divide(firstOperator, secondOperator);
-    case '+/-':
-      if (!secondOperator) return changeSign(firstOperator);
-      return changeSign(secondOperator);
     case '%':
       return percent(firstOperator, secondOperator);
+    case '=':
+      if (resultNumber !== undefined) {
+        let returnValue = resultNumber;
+        resultNumber = undefined;
+        return returnValue;
+      } else return firstNumber;
   }
 }
 
 function insertToDisplay(value) {
-  DISPLAY.textContent += value;
+  if (operandIsPressed) {
+    DISPLAY.textContent = value;
+    operandIsPressed = false;
+  } else {
+    DISPLAY.textContent += value;
+  }
 }
 
 function storeOperand(value) {
-  if (firstNumber == undefined) {
+  operandIsPressed = true;
+  if (resultNumber !== undefined) {
+    firstNumber = resultNumber;
+    resultNumber = undefined;
+  } else if (firstNumberIsCurrent) {
     firstNumber = Number(DISPLAY.textContent);
-    DISPLAY.textContent = '';
+    firstNumberIsCurrent = false;
   } else {
     secondNumber = Number(DISPLAY.textContent);
-    firstNumber = operate(firstNumber, secondNumber, operand);
-    secondNumber = undefined;
-    DISPLAY.textContent = firstNumber;
+    resultNumber = operate(firstNumber, secondNumber, operand);
+    firstNumber = secondNumber = undefined;
+    DISPLAY.textContent = resultNumber;
   }
-  console.log(firstNumber);
-  console.log(secondNumber);
   operand = value;
 }
 
+function makeSingleAction(value) {
+  switch (value) {
+    case '+/-':
+      DISPLAY.textContent = -Number(DISPLAY.textContent);
+      return;
+    case 'AC':
+      DISPLAY.textContent = '';
+      return;
+  }
+}
+
 const DISPLAY = document.querySelector('#display');
-const BUTTONS_NUMBER = document.querySelectorAll('.btn-number');
-const BUTTONS_ACTION = document.querySelectorAll('.btn-action');
+const NUMBERS = document.querySelectorAll('.btn-number');
+const MAIN_ACTIONS = document.querySelectorAll(
+  '.btn-main-action, .btn-percent'
+);
+const SINGLE_ACTIONS = document.querySelectorAll('.btn-single-action');
 
 let firstNumber;
 let secondNumber;
+let resultNumber;
 let operand;
 
-BUTTONS_NUMBER.forEach((button) => {
+let firstNumberIsCurrent = true;
+let operandIsPressed = false;
+
+NUMBERS.forEach((button) => {
   button.addEventListener('click', (e) => insertToDisplay(button.value));
 });
 
-BUTTONS_ACTION.forEach((button) => {
+MAIN_ACTIONS.forEach((button) => {
   button.addEventListener('click', (e) => storeOperand(button.value));
+});
+
+SINGLE_ACTIONS.forEach((button) => {
+  button.addEventListener('click', (e) => makeSingleAction(button.value));
 });

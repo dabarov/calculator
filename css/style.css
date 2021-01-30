@@ -18,6 +18,11 @@ body {
   align-items: center;
 }
 
+header {
+    display: flex;
+    align-items: center;
+}
+
 button {
   width: 50px;
   height: 50px;
@@ -80,4 +85,9 @@ button:hover {
 
 .btn-equal {
   width: 110px;
+}
+
+#github-icon {
+    width: 2rem;
+    margin-left: 1em;
 }

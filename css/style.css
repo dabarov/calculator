@@ -1,0 +1,82 @@
+:root {
+  --main-bg-color: #22252d;
+  --numpad-bg-color: #292d36;
+  --box-bg-color: #272b33;
+  --main-signs-color: #f97c7c;
+  --secondary-signs-color: #26cbb1;
+  --num-color: #fff;
+}
+
+html, body {
+    font-family: arial, sans-serif;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+  width: 50px;
+  height: 50px;
+  background-color: var(--box-bg-color);
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  margin: 2px 2px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+#calculator-frame {
+  background-color: var(--main-bg-color);
+  width: 250px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px;
+  padding-bottom: 0;
+  border-radius: 10px;
+}
+
+#display {
+    margin-left: auto;
+    font-size: 2rem;
+    color: var(--num-color);
+    margin-bottom: 10px;
+}
+
+#numpad {
+  background-color: var(--numpad-bg-color);
+  width: 100%;
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.btn-number {
+  color: var(--num-color);
+}
+
+.btn-main-action {
+  color: var(--main-signs-color);
+}
+
+.btn-second-action {
+  color: var(--secondary-signs-color);
+}
+
+.btn-equal {
+    width: 110px;
+}
